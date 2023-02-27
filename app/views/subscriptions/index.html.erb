@@ -1,0 +1,96 @@
+<div>
+  <div>
+    <h1>
+      <%=@current_user.first_name%> 
+      <%=@current_user.last_name%>'s subscriptions
+    </h1>
+  </div>
+</div>
+
+<hr>
+
+<div>
+  <div>
+
+    <form action="/insert_subscription" method="post">
+
+        <select id="service_id_box" name="query_service_id">
+
+          <%@parsed_sources.each do |source_hash| %>
+
+          <%service = source_hash.fetch("name")%>
+
+          <%service_id = source_hash.fetch("id")%>
+
+          <option value = "<%=service_id%>"> 
+            <%=service%>
+          </option>
+
+          <%end%>
+
+        </select>
+
+        <label for="service_name_box">Confirm Subscription</label>
+
+        <select id="service_name_box" name="query_service_name">
+
+          <%@parsed_sources.each do |source_hash| %>
+
+          <%service = source_hash.fetch("name")%>
+
+          <option value = "<%=service%>"> 
+            <%=service%>
+          </option>
+
+          <%end%>
+
+        </select>
+
+      <button>
+        I'm subscribed!
+      </button>
+    </form>
+  </div>
+</div>
+
+<hr>
+<div>
+  <div>
+    <table border="1">
+      <tr>
+
+        <th>
+          Service
+        </th>
+
+        <th>
+          Created at
+        </th>
+
+        <th>
+        </th>
+      </tr>
+
+      <% @list_of_subscriptions.each do |a_subscription| %>
+      <tr>
+
+        <td>
+          <%= a_subscription.service %>
+        </td>
+
+        <td>
+          <%= time_ago_in_words(a_subscription.created_at) %> ago
+        </td>
+
+        <td>
+          <a href="/delete_subscription/<%= a_subscription.id %>">
+            No longer subscribed
+          </a>
+        </td>
+      </tr>
+      <% end %>
+    </table>
+  </div>
+</div>
+
+<hr>

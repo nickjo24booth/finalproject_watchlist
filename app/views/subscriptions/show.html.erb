@@ -1,0 +1,101 @@
+<div>
+  <div>
+    <h1>
+      Subscription #<%= @the_subscription.id %> details
+    </h1>
+
+    <div>
+      <div>
+        <a href="/subscriptions">
+          Go back
+        </a>
+      </div>
+
+      <div>
+        <a href="/delete_subscription/<%= @the_subscription.id %>">
+          Delete subscription
+        </a>
+      </div>
+    </div>
+
+    <dl>
+      <dt>
+        Service
+      </dt>
+      <dd>
+        <%= @the_subscription.service %>
+      </dd>
+
+      <dt>
+        Service
+      </dt>
+      <dd>
+        <%= @the_subscription.service_id %>
+      </dd>
+
+      <dt>
+        User
+      </dt>
+      <dd>
+        <%= @the_subscription.user_id %>
+      </dd>
+
+      <dt>
+        Created at
+      </dt>
+      <dd>
+        <%= time_ago_in_words(@the_subscription.created_at) %> ago
+      </dd>
+
+      <dt>
+        Updated at
+      </dt>
+      <dd>
+        <%= time_ago_in_words(@the_subscription.updated_at) %> ago
+      </dd>
+    </dl>
+  </div>
+</div>
+
+<hr>
+
+
+<div>
+  <div>
+    <h2>
+      Edit subscription
+    </h2>
+
+    <form action="/modify_subscription/<%= @the_subscription.id %>"  method="post" >
+      <div>
+        <label for="service_box">
+          Service
+        </label>
+
+        <input type="text" id="service_box" name="query_service" value="<%= @the_subscription.service %>">
+      </div>
+
+      <div>
+        <label for="service_id_box">
+          Service
+        </label>
+
+        <input type="text" id="service_id_box" name="query_service_id" value="<%= @the_subscription.service_id %>">
+      </div>
+
+      <div>
+        <label for="user_id_box">
+          User
+        </label>
+
+        <input type="text" id="user_id_box" name="query_user_id" value="<%= @the_subscription.user_id %>">
+      </div>
+
+      <button>
+        Update subscription
+      </button>
+    </form>
+  </div>
+</div>
+
+<hr>
