@@ -1,10 +1,10 @@
 Rails.application.routes.draw do
 
-    #Home Page
+  #Home Page
 
   #Temporary
 
-  get("/", { :controller => "user_authentication", :action => "edit_profile_form" })
+  get("/", { :controller => "user_authentication", :action => "sign_in_form" })
 
   # Routes for the User account:
 
@@ -30,28 +30,25 @@ Rails.application.routes.draw do
 
   # SIGN OUT
   get("/user_sign_out", { :controller => "user_authentication", :action => "destroy_cookies" })
-  
+
   # Routes for the Subscription resource:
 
   # CREATE
   post("/insert_subscription", { :controller => "subscriptions", :action => "create" })
-          
+
   # READ
   get("/subscriptions", { :controller => "subscriptions", :action => "index" })
-  
+
   get("/subscriptions/:path_id", { :controller => "subscriptions", :action => "show" })
-  
+
   # UPDATE
-  
+
   post("/modify_subscription/:path_id", { :controller => "subscriptions", :action => "update" })
-  
+
   # DELETE
   get("/delete_subscription/:path_id", { :controller => "subscriptions", :action => "destroy" })
 
   #------------------------------
-
-
-  
 
   #------------------------------
 
