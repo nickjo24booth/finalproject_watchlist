@@ -1,0 +1,150 @@
+<div>
+  <div>
+    <h1>
+      List of all releases
+    </h1>
+  </div>
+</div>
+
+<hr>
+
+<div>
+  <div>
+    <h2>
+      Add a new release
+    </h2>
+
+    <form action="/insert_release" method="post">
+      <div>
+        <label for="title_box">
+          Title
+        </label>
+
+        <input type="text" id="title_box" name="query_title">
+      </div>
+
+      <div>
+        <label for="year_box">
+          Year
+        </label>
+
+        <input type="text" id="year_box" name="query_year">
+      </div>
+
+      <div>
+        <label for="imdb_id_box">
+          Imdb
+        </label>
+
+        <input type="text" id="imdb_id_box" name="query_imdb_id">
+      </div>
+
+      <div>
+        <label for="api_id_box">
+          Api
+        </label>
+
+        <input type="text" id="api_id_box" name="query_api_id">
+      </div>
+
+      <div>
+        <label for="title_type_box">
+          Title type
+        </label>
+
+        <input type="text" id="title_type_box" name="query_title_type">
+      </div>
+
+      <button>
+        Create release
+      </button>
+    </form>
+  </div>
+</div>
+
+<hr>
+<div>
+  <div>
+    <table border="1">
+      <tr>
+        <th>
+          ID
+        </th>
+
+        <th>
+          Title
+        </th>
+
+        <th>
+          Year
+        </th>
+
+        <th>
+          Imdb
+        </th>
+
+        <th>
+          Api
+        </th>
+
+        <th>
+          Title type
+        </th>
+
+        <th>
+          Created at
+        </th>
+
+        <th>
+          Updated at
+        </th>
+
+        <th>
+        </th>
+      </tr>
+
+      <% @list_of_releases.each do |a_release| %>
+      <tr>
+        <td>
+          <%= a_release.id %>
+        </td>
+
+        <td>
+          <%= a_release.title %>
+        </td>
+
+        <td>
+          <%= a_release.year %>
+        </td>
+
+        <td>
+          <%= a_release.imdb_id %>
+        </td>
+
+        <td>
+          <%= a_release.api_id %>
+        </td>
+
+        <td>
+          <%= a_release.title_type %>
+        </td>
+
+        <td>
+          <%= time_ago_in_words(a_release.created_at) %> ago
+        </td>
+        <td>
+          <%= time_ago_in_words(a_release.updated_at) %> ago
+        </td>
+
+        <td>
+          <a href="/releases/<%= a_release.id %>">
+            Show details
+          </a>
+        </td>
+      </tr>
+      <% end %>
+    </table>
+  </div>
+</div>
+
+<hr>

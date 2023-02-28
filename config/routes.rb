@@ -1,5 +1,24 @@
 Rails.application.routes.draw do
 
+  # Routes for the Release resource:
+
+  # CREATE
+  post("/insert_release", { :controller => "releases", :action => "create" })
+          
+  # READ
+  get("/releases", { :controller => "releases", :action => "index" })
+  
+  get("/releases/:path_id", { :controller => "releases", :action => "show" })
+  
+  # UPDATE
+  
+  post("/modify_release/:path_id", { :controller => "releases", :action => "update" })
+  
+  # DELETE
+  get("/delete_release/:path_id", { :controller => "releases", :action => "destroy" })
+
+  #------------------------------
+
   #Home Page
 
   #Temporary

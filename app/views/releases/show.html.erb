@@ -1,0 +1,131 @@
+<div>
+  <div>
+    <h1>
+      Release #<%= @the_release.id %> details
+    </h1>
+
+    <div>
+      <div>
+        <a href="/releases">
+          Go back
+        </a>
+      </div>
+
+      <div>
+        <a href="/delete_release/<%= @the_release.id %>">
+          Delete release
+        </a>
+      </div>
+    </div>
+
+    <dl>
+      <dt>
+        Title
+      </dt>
+      <dd>
+        <%= @the_release.title %>
+      </dd>
+
+      <dt>
+        Year
+      </dt>
+      <dd>
+        <%= @the_release.year %>
+      </dd>
+
+      <dt>
+        Imdb
+      </dt>
+      <dd>
+        <%= @the_release.imdb_id %>
+      </dd>
+
+      <dt>
+        Api
+      </dt>
+      <dd>
+        <%= @the_release.api_id %>
+      </dd>
+
+      <dt>
+        Title type
+      </dt>
+      <dd>
+        <%= @the_release.title_type %>
+      </dd>
+
+      <dt>
+        Created at
+      </dt>
+      <dd>
+        <%= time_ago_in_words(@the_release.created_at) %> ago
+      </dd>
+
+      <dt>
+        Updated at
+      </dt>
+      <dd>
+        <%= time_ago_in_words(@the_release.updated_at) %> ago
+      </dd>
+    </dl>
+  </div>
+</div>
+
+<hr>
+
+
+<div>
+  <div>
+    <h2>
+      Edit release
+    </h2>
+
+    <form action="/modify_release/<%= @the_release.id %>"  method="post" >
+      <div>
+        <label for="title_box">
+          Title
+        </label>
+
+        <input type="text" id="title_box" name="query_title" value="<%= @the_release.title %>">
+      </div>
+
+      <div>
+        <label for="year_box">
+          Year
+        </label>
+
+        <input type="text" id="year_box" name="query_year" value="<%= @the_release.year %>">
+      </div>
+
+      <div>
+        <label for="imdb_id_box">
+          Imdb
+        </label>
+
+        <input type="text" id="imdb_id_box" name="query_imdb_id" value="<%= @the_release.imdb_id %>">
+      </div>
+
+      <div>
+        <label for="api_id_box">
+          Api
+        </label>
+
+        <input type="text" id="api_id_box" name="query_api_id" value="<%= @the_release.api_id %>">
+      </div>
+
+      <div>
+        <label for="title_type_box">
+          Title type
+        </label>
+
+        <input type="text" id="title_type_box" name="query_title_type" value="<%= @the_release.title_type %>">
+      </div>
+
+      <button>
+        Update release
+      </button>
+    </form>
+  </div>
+</div>
+
+<hr>
