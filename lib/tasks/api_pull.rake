@@ -1,6 +1,8 @@
 namespace :api_pull do
   desc "Pull streaming sources and titles from watchmode"
   task sources: :environment do
+    Source.destroy_all
+    
     sources_url = "https://api.watchmode.com/v1/sources/?apiKey=CJ3pKXmnPcgBLUEVstAYuYDvlN4XCY36rfPSEpdU"
 
     require "open-uri"
@@ -27,6 +29,8 @@ namespace :api_pull do
   end
 
   task contents: :environment do
+    Release.destroy_all
+    
     require "open-uri"
 
     require "json"
@@ -68,5 +72,6 @@ namespace :api_pull do
         current_page = current_page + 1
       end
     end
+    p "There are #{Release.count} titles."
   end
 end
