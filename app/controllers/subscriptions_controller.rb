@@ -12,6 +12,16 @@ class SubscriptionsController < ApplicationController
 
     @list_of_subscriptions = matching_subscriptions.order({ :service => :desc })
 
+    #Testing
+
+    current_url = "https://api.watchmode.com/v1/list-titles/?apiKey=CJ3pKXmnPcgBLUEVstAYuYDvlN4XCY36rfPSEpdU&source_ids=203&page=2"
+
+        response = URI.open(current_url).read
+
+        parsed = JSON.parse(response)
+
+        @titles_array = parsed.fetch("titles")
+
     render({ :template => "subscriptions/index.html.erb" })
   end
 

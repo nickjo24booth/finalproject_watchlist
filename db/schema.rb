@@ -10,17 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_02_28_032400) do
+ActiveRecord::Schema.define(version: 2023_02_28_215140) do
 
   create_table "releases", force: :cascade do |t|
     t.string "title"
     t.integer "year"
-    t.integer "imdb_id"
     t.integer "api_id"
     t.string "title_type"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "service_id"
+    t.string "imdb_id"
   end
 
   create_table "sources", force: :cascade do |t|

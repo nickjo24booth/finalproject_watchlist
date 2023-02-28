@@ -9,7 +9,7 @@
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #  api_id     :integer
-#  imdb_id    :integer
+#  imdb_id    :string
 #  service_id :integer
 #
 class Release < ApplicationRecord
