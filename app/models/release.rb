@@ -10,6 +10,7 @@
 #  updated_at :datetime         not null
 #  api_id     :integer
 #  imdb_id    :integer
+#  service_id :integer
 #
 class Release < ApplicationRecord
 end

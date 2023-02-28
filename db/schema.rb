@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_02_28_030800) do
+ActiveRecord::Schema.define(version: 2023_02_28_032400) do
 
   create_table "releases", force: :cascade do |t|
     t.string "title"
@@ -20,6 +20,7 @@ ActiveRecord::Schema.define(version: 2023_02_28_030800) do
     t.string "title_type"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "service_id"
   end
 
   create_table "sources", force: :cascade do |t|
