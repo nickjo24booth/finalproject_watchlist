@@ -27,7 +27,7 @@ class SubscriptionsController < ApplicationController
     render({ :template => "subscriptions/show.html.erb" })
   end
 
-  def create #NEED TO FIX THIS
+  def create
     the_subscription = Subscription.new
     the_subscription.service_id = params.fetch("query_service_id")
     the_subscription.user_id = @current_user.id

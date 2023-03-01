@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_03_01_213030) do
+ActiveRecord::Schema.define(version: 2023_03_01_221718) do
 
   create_table "releases", force: :cascade do |t|
     t.string "title"
@@ -32,6 +32,12 @@ ActiveRecord::Schema.define(version: 2023_03_01_213030) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "statuses", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "subscriptions", force: :cascade do |t|
     t.integer "service_id"
     t.integer "user_id"
@@ -46,6 +52,14 @@ ActiveRecord::Schema.define(version: 2023_03_01_213030) do
     t.string "last_name"
     t.integer "titles_count"
     t.integer "subscriptions_count"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "watchlist_titles", force: :cascade do |t|
+    t.integer "title_id"
+    t.integer "status_id"
+    t.integer "user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

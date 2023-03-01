@@ -1,5 +1,24 @@
 Rails.application.routes.draw do
 
+  # Routes for the Watchlist title resource:
+
+  # CREATE
+  post("/insert_watchlist_title", { :controller => "watchlist_titles", :action => "create" })
+          
+  # READ
+  get("/watchlist_titles", { :controller => "watchlist_titles", :action => "index" })
+  
+  get("/watchlist_titles/:path_id", { :controller => "watchlist_titles", :action => "show" })
+  
+  # UPDATE
+  
+  post("/modify_watchlist_title/:path_id", { :controller => "watchlist_titles", :action => "update" })
+  
+  # DELETE
+  get("/delete_watchlist_title/:path_id", { :controller => "watchlist_titles", :action => "destroy" })
+
+  #------------------------------
+
   # Routes for the Release resource:
 
   # CREATE

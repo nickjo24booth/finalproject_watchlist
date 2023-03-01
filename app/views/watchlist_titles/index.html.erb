@@ -1,0 +1,118 @@
+<div>
+  <div>
+    <h1>
+      List of all watchlist titles
+    </h1>
+  </div>
+</div>
+
+<hr>
+
+<div>
+  <div>
+    <h2>
+      Add a new watchlist title
+    </h2>
+
+    <form action="/insert_watchlist_title" method="post">
+      <div>
+        <label for="title_id_box">
+          Title
+        </label>
+
+        <input type="text" id="title_id_box" name="query_title_id">
+      </div>
+
+      <div>
+        <label for="status_id_box">
+          Status
+        </label>
+
+        <input type="text" id="status_id_box" name="query_status_id">
+      </div>
+
+      <div>
+        <label for="user_id_box">
+          User
+        </label>
+
+        <input type="text" id="user_id_box" name="query_user_id">
+      </div>
+
+      <button>
+        Create watchlist title
+      </button>
+    </form>
+  </div>
+</div>
+
+<hr>
+<div>
+  <div>
+    <table border="1">
+      <tr>
+        <th>
+          ID
+        </th>
+
+        <th>
+          Title
+        </th>
+
+        <th>
+          Status
+        </th>
+
+        <th>
+          User
+        </th>
+
+        <th>
+          Created at
+        </th>
+
+        <th>
+          Updated at
+        </th>
+
+        <th>
+        </th>
+      </tr>
+
+      <% @list_of_watchlist_titles.each do |a_watchlist_title| %>
+      <tr>
+        <td>
+          <%= a_watchlist_title.id %>
+        </td>
+
+        <td>
+          <%= a_watchlist_title.title_id %>
+        </td>
+
+        <td>
+          <%= a_watchlist_title.status_id %>
+        </td>
+
+        <td>
+          <%= a_watchlist_title.user_id %>
+        </td>
+
+        <td>
+          <%= time_ago_in_words(a_watchlist_title.created_at) %> ago
+        </td>
+        <td>
+          <%= time_ago_in_words(a_watchlist_title.updated_at) %> ago
+        </td>
+
+        <td>
+          <a href="/watchlist_titles/<%= a_watchlist_title.id %>">
+            Show details
+          </a>
+        </td>
+      </tr>
+      <% end %>
+    </table>
+  </div>
+</div>
+
+<hr>
