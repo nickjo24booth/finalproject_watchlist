@@ -13,4 +13,6 @@
 #  service_id :integer
 #
 class Release < ApplicationRecord
+  #To get the unique values from the serivce_id column, use
+  #Release.distinct.pluck(:service_id)
 end

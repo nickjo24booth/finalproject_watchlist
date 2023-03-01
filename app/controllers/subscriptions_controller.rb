@@ -1,26 +1,18 @@
 class SubscriptionsController < ApplicationController
   def index
-    sources_url = "https://api.watchmode.com/v1/sources/?apiKey=CJ3pKXmnPcgBLUEVstAYuYDvlN4XCY36rfPSEpdU"
+    # sources_url = "https://api.watchmode.com/v1/sources/?apiKey=CJ3pKXmnPcgBLUEVstAYuYDvlN4XCY36rfPSEpdU"
 
-    require "open-uri"
-    raw_response = URI.open(sources_url).read
+    # require "open-uri"
+    # raw_response = URI.open(sources_url).read
 
-    require "json"
-    @parsed_sources = JSON.parse(raw_response)
+    # require "json"
+    # @parsed_sources = JSON.parse(raw_response)
+
+    @all_services = Source.all
 
     matching_subscriptions = @current_user.subscriptions
 
     @list_of_subscriptions = matching_subscriptions.order({ :service => :desc })
-
-    #Testing
-
-    current_url = "https://api.watchmode.com/v1/list-titles/?apiKey=CJ3pKXmnPcgBLUEVstAYuYDvlN4XCY36rfPSEpdU&source_ids=203&page=2"
-
-        response = URI.open(current_url).read
-
-        parsed = JSON.parse(response)
-
-        @titles_array = parsed.fetch("titles")
 
     render({ :template => "subscriptions/index.html.erb" })
   end
@@ -35,9 +27,8 @@ class SubscriptionsController < ApplicationController
     render({ :template => "subscriptions/show.html.erb" })
   end
 
-  def create
+  def create #NEED TO FIX THIS
     the_subscription = Subscription.new
-    the_subscription.service = params.fetch("query_service_name")
     the_subscription.service_id = params.fetch("query_service_id")
     the_subscription.user_id = @current_user.id
 

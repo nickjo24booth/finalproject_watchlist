@@ -9,7 +9,6 @@
 
 <hr>
 
-<%=@titles_array[1].fetch("imdb_id").class%>
 
 <div>
   <div>
@@ -18,30 +17,10 @@
 
         <select id="service_id_box" name="query_service_id">
 
-          <%@parsed_sources.each do |source_hash| %>
+          <%@all_services.each do |service| %>
 
-          <%service = source_hash.fetch("name")%>
-
-          <%service_id = source_hash.fetch("id")%>
-
-          <option value = "<%=service_id%>"> 
-            <%=service%>
-          </option>
-
-          <%end%>
-
-        </select>
-
-        <label for="service_name_box">Confirm Subscription</label>
-
-        <select id="service_name_box" name="query_service_name">
-
-          <%@parsed_sources.each do |source_hash| %>
-
-          <%service = source_hash.fetch("name")%>
-
-          <option value = "<%=service%>"> 
-            <%=service%>
+          <option value = "<%=service.api_id%>"> 
+            <%=service.name%>
           </option>
 
           <%end%>
@@ -77,7 +56,7 @@
       <tr>
 
         <td>
-          <%= a_subscription.service %>
+          <%= a_subscription.service.name %>
         </td>
 
         <td>
