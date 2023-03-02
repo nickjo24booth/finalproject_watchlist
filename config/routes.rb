@@ -1,5 +1,11 @@
 Rails.application.routes.draw do
 
+  #Home Page
+
+  #Temporary
+
+  get("/", { :controller => "user_authentication", :action => "sign_in_form" })
+  
   # Routes for the Watchlist title resource:
 
   # CREATE
@@ -37,12 +43,6 @@ Rails.application.routes.draw do
   get("/delete_release/:path_id", { :controller => "releases", :action => "destroy" })
 
   #------------------------------
-
-  #Home Page
-
-  #Temporary
-
-  get("/", { :controller => "user_authentication", :action => "sign_in_form" })
 
   # Routes for the User account:
 

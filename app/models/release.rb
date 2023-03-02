@@ -15,4 +15,6 @@
 class Release < ApplicationRecord
   #To get the unique values from the serivce_id column, use
   #Release.distinct.pluck(:service_id)
+
+  belongs_to(:service, { :foreign_key => "service_id", :class_name => "Source", :primary_key => "api_id" })
 end

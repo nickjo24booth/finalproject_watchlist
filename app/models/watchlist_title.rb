@@ -10,4 +10,9 @@
 #  user_id    :integer
 #
 class WatchlistTitle < ApplicationRecord
+
+  validates(:user_id, { :presence => true })
+  validates(:title_id, { :uniqueness => { :scope => [:user_id] } })
+
+  validates(:status_id, { :presence => true })
 end

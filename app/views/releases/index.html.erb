@@ -1,75 +1,32 @@
 <div>
   <div>
     <h1>
-      List of all releases
+    <%if session.fetch(:user_id) != nil%>
+      Your Available
+    <%elsif session.fetch(:user_id) == nil%>
+      All
+    <%end%>
+      Releases
     </h1>
   </div>
 </div>
 
 <hr>
 
-<div>
-  <div>
-    <h2>
-      Add a new release
-    </h2>
+<%if session.fetch(:user_id) == nil%>
 
-    <form action="/insert_release" method="post">
-      <div>
-        <label for="title_box">
-          Title
-        </label>
+<%@service_id_array.each do |id|%>
 
-        <input type="text" id="title_box" name="query_title">
-      </div>
+<%releases = @matching_releases.where({:service_id => id}).order({:title => :asc})%>
 
-      <div>
-        <label for="year_box">
-          Year
-        </label>
+<%proxy = releases.first%>
 
-        <input type="text" id="year_box" name="query_year">
-      </div>
+<h1> <%=proxy.service.name%> </h1>
 
-      <div>
-        <label for="imdb_id_box">
-          Imdb
-        </label>
-
-        <input type="text" id="imdb_id_box" name="query_imdb_id">
-      </div>
-
-      <div>
-        <label for="api_id_box">
-          Api
-        </label>
-
-        <input type="text" id="api_id_box" name="query_api_id">
-      </div>
-
-      <div>
-        <label for="title_type_box">
-          Title type
-        </label>
-
-        <input type="text" id="title_type_box" name="query_title_type">
-      </div>
-
-      <button>
-        Create release
-      </button>
-    </form>
-  </div>
-</div>
-
-<hr>
 <div>
   <div>
     <table border="1">
       <tr>
-        <th>
-          ID
-        </th>
 
         <th>
           Title
@@ -80,64 +37,47 @@
         </th>
 
         <th>
-          Imdb
+          Streaming Service
         </th>
 
         <th>
-          Api
+          Imdb ID
         </th>
 
         <th>
           Title type
-        </th>
-
-        <th>
-          Created at
-        </th>
-
-        <th>
-          Updated at
         </th>
 
         <th>
         </th>
       </tr>
-
-      <% @list_of_releases.each do |a_release| %>
+      
+      <%releases.each do |title|%>
+      
       <tr>
+
         <td>
-          <%= a_release.id %>
+          <%= title.title %>
         </td>
 
         <td>
-          <%= a_release.title %>
+          <%= title.year %>
         </td>
 
         <td>
-          <%= a_release.year %>
+          <%= title.service.name %>
         </td>
 
         <td>
-          <%= a_release.imdb_id %>
+          <%= title.imdb_id %>
         </td>
 
         <td>
-          <%= a_release.api_id %>
+          <%= title.title_type %>
         </td>
 
         <td>
-          <%= a_release.title_type %>
-        </td>
-
-        <td>
-          <%= time_ago_in_words(a_release.created_at) %> ago
-        </td>
-        <td>
-          <%= time_ago_in_words(a_release.updated_at) %> ago
-        </td>
-
-        <td>
-          <a href="/releases/<%= a_release.id %>">
+          <a href="/releases/<%= title.api_id %>">
             Show details
           </a>
         </td>
@@ -146,5 +86,89 @@
     </table>
   </div>
 </div>
+
+<%end%>
+
+<%else%>
+
+<%@service_id_array.each do |id|%>
+
+<%if @users_streaming_services.include?(id) == true%>
+
+<%releases = @matching_releases.where({:service_id => id}).order({:title => :asc})%>
+
+<%proxy = releases.first%>
+
+<h1> <%=proxy.service.name%> </h1>
+
+<div>
+  <div>
+    <table border="1">
+      <tr>
+
+        <th>
+          Title
+        </th>
+
+        <th>
+          Year
+        </th>
+
+        <th>
+          Streaming Service
+        </th>
+
+        <th>
+          Imdb ID
+        </th>
+
+        <th>
+          Title type
+        </th>
+
+        <th>
+        </th>
+      </tr>
+      
+      <%releases.each do |title|%>
+      
+      <tr>
+
+        <td>
+          <%= title.title %>
+        </td>
+
+        <td>
+          <%= title.year %>
+        </td>
+
+        <td>
+          <%= title.service.name %>
+        </td>
+
+        <td>
+          <%= title.imdb_id %>
+        </td>
+
+        <td>
+          <%= title.title_type %>
+        </td>
+
+        <td>
+          <a href="/releases/<%= title.api_id %>">
+            Show details
+          </a>
+        </td>
+      </tr>
+      <% end %>
+    </table>
+  </div>
+</div>
+
+<%end%>
+
+<%end%>
+
+<%end%>
 
 <hr>

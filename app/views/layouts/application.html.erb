@@ -17,6 +17,48 @@
 
   <body>
 
+  <nav>
+
+    <ul>
+
+      <%if session.fetch(:user_id) == nil%>
+      <li>
+        <a href="/user_sign_in">Sign In</a>
+      </li>
+    
+      <li>
+        <a href="/user_sign_up">Sign Up</a>
+      </li>
+
+      <li>
+        <a href="/releases">
+          All Titles
+        </a>
+      </li>
+      <%end%>
+
+      <%if session.fetch(:user_id) != nil%>
+      <li>
+        <a href="/user_sign_out">Sign Out</a>
+      </li>
+
+      <li>
+        <a href="/subscriptions">
+          My Subscriptions
+        </a>
+      </li>
+
+      <li>
+        <a href="/releases">
+          Available Titles
+        </a>
+      </li>
+      <%end%>
+
+    </ul>
+
+  </nav>
+
   <%if notice.present? %>
     <div style = "border: thin green solid; color: green" >
       <%= notice%>

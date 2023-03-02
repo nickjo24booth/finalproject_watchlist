@@ -9,16 +9,20 @@
 #  user_id    :integer
 #
 class Subscription < ApplicationRecord
-  validates :service, :presence => true
+  validates(:service_id, { :presence => true })
+
   validates(:service_id, { :uniqueness => { :scope => [:user_id] } })
 
-  def service
-    key = self.service_id
+  validates(:user_id, { :presence => true })
 
-    matching_set = Source.where({ :api_id => key })
+  belongs_to(:service, { :foreign_key => "service_id", :class_name => "Source", :primary_key => "api_id" })
+  # def service
+  #   key = self.service_id
 
-    the_one = matching_set.at(0)
+  #   matching_set = Source.where({ :api_id => key })
 
-    return the_one
-  end
+  #   the_one = matching_set.at(0)
+
+  #   return the_one
+  # end
 end
