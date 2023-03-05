@@ -2,11 +2,10 @@
   <div>
     <h1>
     <%if session.fetch(:user_id) != nil%>
-      Your Available
+      Titles Available on Your Subscribed Services
     <%elsif session.fetch(:user_id) == nil%>
-      All
+      All Titles
     <%end%>
-      Releases
     </h1>
   </div>
 </div>
@@ -41,11 +40,7 @@
         </th>
 
         <th>
-          Imdb ID
-        </th>
-
-        <th>
-          Title type
+          Title Type
         </th>
 
         <th>
@@ -69,18 +64,15 @@
         </td>
 
         <td>
-          <%= title.imdb_id %>
-        </td>
-
-        <td>
           <%= title.title_type %>
         </td>
 
         <td>
-          <a href="/releases/<%= title.api_id %>">
-            Show details
+          <a href="https://www.imdb.com/title/<%= title.imdb_id %>/" target="_blank">
+            See details
           </a>
         </td>
+ 
       </tr>
       <% end %>
     </table>
@@ -119,11 +111,10 @@
         </th>
 
         <th>
-          Imdb ID
+          Title Type
         </th>
 
         <th>
-          Title type
         </th>
 
         <th>
@@ -147,17 +138,22 @@
         </td>
 
         <td>
-          <%= title.imdb_id %>
-        </td>
-
-        <td>
           <%= title.title_type %>
         </td>
 
         <td>
-          <a href="/releases/<%= title.api_id %>">
-            Show details
+          <a href="https://www.imdb.com/title/<%= title.imdb_id %>/" target="_blank">
+            See details
           </a>
+        </td>
+
+        <td>
+          <form action="/insert_watchlist_title" method="post">
+
+            <input id="title_id_box" type="hidden" value="<%=title.api_id%>" name="query_title_id">
+
+            <button>Add to your watchlist</button>
+          </form>
         </td>
       </tr>
       <% end %>

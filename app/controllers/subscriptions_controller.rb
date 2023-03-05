@@ -14,15 +14,6 @@ class SubscriptionsController < ApplicationController
 
     @list_of_subscriptions = matching_subscriptions.order({ :service => :desc })
 
-    #Test
-
-    matching_releases = Release.all
-    service_id_array = matching_releases.map_relation_to_array(:service_id)
-
-    service_id_array.each do |id|
-      instance_variable_set("@test_#{id}", id + 1)
-    end
-
     render({ :template => "subscriptions/index.html.erb" })
   end
 
