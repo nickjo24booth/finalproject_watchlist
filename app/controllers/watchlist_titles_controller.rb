@@ -1,12 +1,16 @@
 class WatchlistTitlesController < ApplicationController
   def index
-    @all_titles = Release.all.order({:title => :asc})
-    
+    @all_titles = Release.all.order({ :title => :asc })
+
     matching_watchlist_titles = @current_user.watchlist_titles
 
     #Define 3 arrays for each status
 
-    @list_of_watchlist_titles = matching_watchlist_titles.order({ :created_at => :desc })
+    @not_started = matching_watchlist_titles.where({ :status_id => 1 }).order({ :created_at => :desc })
+    @in_progress = matching_watchlist_titles.where({ :status_id => 2 }).order({ :created_at => :desc })
+    @completed = matching_watchlist_titles.where({ :status_id => 3 }).order({ :created_at => :desc })
+
+    #@list_of_watchlist_titles = matching_watchlist_titles.order({ :created_at => :desc })
 
     render({ :template => "watchlist_titles/index.html.erb" })
   end
@@ -39,15 +43,13 @@ class WatchlistTitlesController < ApplicationController
     the_id = params.fetch("path_id")
     the_watchlist_title = WatchlistTitle.where({ :id => the_id }).at(0)
 
-    the_watchlist_title.title_id = params.fetch("query_title_id")
     the_watchlist_title.status_id = params.fetch("query_status_id")
-    the_watchlist_title.user_id = params.fetch("query_user_id")
 
     if the_watchlist_title.valid?
       the_watchlist_title.save
-      redirect_to("/watchlist_titles/#{the_watchlist_title.id}", { :notice => "Watchlist title updated successfully."} )
+      redirect_to("/watchlist_titles", { :notice => "Watchlist title updated successfully." })
     else
-      redirect_to("/watchlist_titles/#{the_watchlist_title.id}", { :alert => the_watchlist_title.errors.full_messages.to_sentence })
+      redirect_to("/watchlist_titles", { :alert => the_watchlist_title.errors.full_messages.to_sentence })
     end
   end
 
@@ -57,6 +59,6 @@ class WatchlistTitlesController < ApplicationController
 
     the_watchlist_title.destroy
 
-    redirect_to("/watchlist_titles", { :notice => "Title successfully removed from watchlist."} )
+    redirect_to("/watchlist_titles", { :notice => "Title successfully removed from watchlist." })
   end
 end
