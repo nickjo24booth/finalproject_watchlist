@@ -4,22 +4,22 @@ Rails.application.routes.draw do
 
   #Temporary
 
-  get("/", { :controller => "user_authentication", :action => "sign_in_form" })
-  
+  get("/", { :controller => "releases", :action => "index" })
+
   # Routes for the Watchlist title resource:
 
   # CREATE
   post("/insert_watchlist_title", { :controller => "watchlist_titles", :action => "create" })
-          
+
   # READ
   get("/watchlist_titles", { :controller => "watchlist_titles", :action => "index" })
-  
+
   get("/watchlist_titles/:path_id", { :controller => "watchlist_titles", :action => "show" })
-  
+
   # UPDATE
-  
+
   post("/modify_watchlist_title/:path_id", { :controller => "watchlist_titles", :action => "update" })
-  
+
   # DELETE
   get("/delete_watchlist_title/:path_id", { :controller => "watchlist_titles", :action => "destroy" })
 
@@ -29,16 +29,16 @@ Rails.application.routes.draw do
 
   # CREATE
   post("/insert_release", { :controller => "releases", :action => "create" })
-          
+
   # READ
   get("/releases", { :controller => "releases", :action => "index" })
-  
+
   get("/releases/:path_id", { :controller => "releases", :action => "show" })
-  
+
   # UPDATE
-  
+
   post("/modify_release/:path_id", { :controller => "releases", :action => "update" })
-  
+
   # DELETE
   get("/delete_release/:path_id", { :controller => "releases", :action => "destroy" })
 
