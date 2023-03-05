@@ -1,6 +1,10 @@
 class WatchlistTitlesController < ApplicationController
   def index
-    matching_watchlist_titles = WatchlistTitle.all
+    @all_titles = Release.all.order({:title => :asc})
+    
+    matching_watchlist_titles = @current_user.watchlist_titles
+
+    #Define 3 arrays for each status
 
     @list_of_watchlist_titles = matching_watchlist_titles.order({ :created_at => :desc })
 
@@ -20,8 +24,8 @@ class WatchlistTitlesController < ApplicationController
   def create
     the_watchlist_title = WatchlistTitle.new
     the_watchlist_title.title_id = params.fetch("query_title_id")
-    the_watchlist_title.status_id = params.fetch("query_status_id")
-    the_watchlist_title.user_id = params.fetch("query_user_id")
+    the_watchlist_title.status_id = 1
+    the_watchlist_title.user_id = @current_user.id
 
     if the_watchlist_title.valid?
       the_watchlist_title.save
@@ -53,6 +57,6 @@ class WatchlistTitlesController < ApplicationController
 
     the_watchlist_title.destroy
 
-    redirect_to("/watchlist_titles", { :notice => "Watchlist title deleted successfully."} )
+    redirect_to("/watchlist_titles", { :notice => "Title successfully removed from watchlist."} )
   end
 end

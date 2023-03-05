@@ -18,4 +18,6 @@ class User < ApplicationRecord
   has_secure_password
 
   has_many(:subscriptions, { :class_name => "Subscription", :foreign_key => "user_id", :dependent => :destroy })
+
+  has_many(:watchlist_titles, { :class_name => "WatchlistTitle", :foreign_key => "user_id", :dependent => :destroy })
 end

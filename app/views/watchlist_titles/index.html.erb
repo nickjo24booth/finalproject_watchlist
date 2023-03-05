@@ -1,7 +1,8 @@
 <div>
   <div>
     <h1>
-      List of all watchlist titles
+      <%=@current_user.first_name%> 
+      <%=@current_user.last_name%>'s Watchlist Titles
     </h1>
   </div>
 </div>
@@ -10,37 +11,23 @@
 
 <div>
   <div>
-    <h2>
-      Add a new watchlist title
-    </h2>
-
+    
     <form action="/insert_watchlist_title" method="post">
-      <div>
-        <label for="title_id_box">
-          Title
-        </label>
 
-        <input type="text" id="title_id_box" name="query_title_id">
-      </div>
+        <select id="title_id_box" name="query_title_id">
 
-      <div>
-        <label for="status_id_box">
-          Status
-        </label>
+          <%@all_titles.each do |title| %>
 
-        <input type="text" id="status_id_box" name="query_status_id">
-      </div>
+          <option value = "<%=title.api_id%>"> 
+            <%=title.title%>
+          </option>
 
-      <div>
-        <label for="user_id_box">
-          User
-        </label>
+          <%end%>
 
-        <input type="text" id="user_id_box" name="query_user_id">
-      </div>
+        </select>
 
       <button>
-        Create watchlist title
+        Add to your watchlist!
       </button>
     </form>
   </div>
@@ -51,9 +38,6 @@
   <div>
     <table border="1">
       <tr>
-        <th>
-          ID
-        </th>
 
         <th>
           Title
@@ -64,15 +48,17 @@
         </th>
 
         <th>
-          User
+          Service
         </th>
 
         <th>
-          Created at
+          Last Update
         </th>
 
         <th>
-          Updated at
+        </th>
+
+        <th>
         </th>
 
         <th>
@@ -81,32 +67,34 @@
 
       <% @list_of_watchlist_titles.each do |a_watchlist_title| %>
       <tr>
+
         <td>
-          <%= a_watchlist_title.id %>
+          <%= a_watchlist_title.release.title %>
         </td>
 
         <td>
-          <%= a_watchlist_title.title_id %>
+          <%= a_watchlist_title.status.name %>
         </td>
 
         <td>
-          <%= a_watchlist_title.status_id %>
+          <%= a_watchlist_title.service.name %>
         </td>
 
-        <td>
-          <%= a_watchlist_title.user_id %>
-        </td>
-
-        <td>
-          <%= time_ago_in_words(a_watchlist_title.created_at) %> ago
-        </td>
         <td>
           <%= time_ago_in_words(a_watchlist_title.updated_at) %> ago
         </td>
 
         <td>
-          <a href="/watchlist_titles/<%= a_watchlist_title.id %>">
-            Show details
+          Placeholder for status change 1
+        </td>
+
+        <td>
+          Placeholder for status change 2
+        </td>
+
+        <td>
+          <a href="/delete_watchlist_title/<%= a_watchlist_title.id %>">
+            Remove from watchlist
           </a>
         </td>
       </tr>
