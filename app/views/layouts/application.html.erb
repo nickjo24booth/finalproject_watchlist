@@ -13,6 +13,10 @@
 
     <%= stylesheet_link_tag 'application', media: 'all' %>
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+
   </head>
 
   <body>
@@ -57,19 +61,20 @@
 
     </ul>
 
-  </nav>
+    </nav>
 
-  <%if notice.present? %>
-    <div style = "border: thin green solid; color: green" >
-      <%= notice%>
-    </div>
+    <%if notice.present? %>
+      <div class="alert alert-success" role="alert">
+        <%= notice%>
+      </div>
     <%end%>
 
     <%if alert.present? %>
-      <div style = "border: thin red solid; color: red">
+      <div class="alert alert-danger" role="alert">
         <%= alert%>
       </div>
     <%end%>
-    <%= yield %>
+
+  <%= yield %>
   </body>
 </html>
