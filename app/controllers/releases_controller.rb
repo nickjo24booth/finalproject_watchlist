@@ -1,6 +1,6 @@
 class ReleasesController < ApplicationController
   def index
-    @matching_releases = Release.all
+    @matching_releases = Release.all.order({ :service_id => :asc }).page(params[:page]).per(500)
     @service_id_array = Release.distinct.pluck(:service_id)
 
     if session.fetch(:user_id) != nil

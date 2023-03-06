@@ -20,7 +20,12 @@
 
 <%proxy = releases.first%>
 
-<h1> <%=proxy.service.name%> </h1>
+<%if proxy != nil%>
+
+<div>
+    <h1> <%=proxy.service.name%> </h1>
+    <%= paginate releases %>
+</div>
 
 <div>
   <div>
@@ -81,6 +86,8 @@
 
 <%end%>
 
+<%end%>
+
 <%else%>
 
 <%@service_id_array.each do |id|%>
@@ -91,7 +98,12 @@
 
 <%proxy = releases.first%>
 
-<h1> <%=proxy.service.name%> </h1>
+<%if proxy != nil%>
+
+<div>
+    <h1> <%=proxy.service.name%> </h1>
+    <%= paginate releases %>
+</div>
 
 <div>
   <div>
@@ -160,6 +172,8 @@
     </table>
   </div>
 </div>
+
+<%end%>
 
 <%end%>
 
