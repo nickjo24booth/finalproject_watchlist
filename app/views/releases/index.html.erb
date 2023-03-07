@@ -1,227 +1,194 @@
-<div>
+<div class="container">
+    <div>
+      <h1>
+      <%if session.fetch(:user_id) != nil%>
+        Titles Available on Your Subscribed Services
+      <%elsif session.fetch(:user_id) == nil%>
+        All Titles
+      <%end%>
+      </h1>
+    </div>
+
+
+  <hr>
+
+  <div class = "container">
+    <div class="row">
+      <%= search_form_for @q do |f| %>
+        <h5>Filter titles:</h5>
+
+        <div class="d-flex justify-content-between">
+          <div>
+            <%= f.label :title_cont, "Title containing:" %>
+            <%= f.text_field :title_cont, :placeholder => "Enter a few characters" %>
+          </div>
+
+          <div>
+            <%= f.label :year_gteq, "Released after:" %>
+            <%= f.text_field :year_gteq, :placeholder => "Year greater than or equal to" %>
+          </div>
+
+          <div>
+            <%= f.label :year_lteq, "Released before:" %>
+            <%= f.text_field :year_lteq, :placeholder => "Year less than or equal to" %>
+          </div>
+
+          <div>
+          <%= f.label :title_type_eq, "Type of Content:" %>
+          <%= f.select :title_type_eq, options_from_collection_for_select(Release.all.distinct(:title_type), :title_type, :title_type, @q.title_type_eq), { :include_blank => true } %>
+          </div>
+
+          <div>
+          <%= f.label :service_api_id_eq, "Service:" %>
+          <%= f.select :service_api_id_eq, options_from_collection_for_select(Source.all, :api_id, :name, @q.service_api_id_eq), { :include_blank => true } %>
+          </div>
+
+        </div>
+    </div>
+
+    <div class="d-grid gap-2">
+      <div class="mt-1"> <%= f.submit :class => "btn btn-primary btn-block" %> </div>
+          
+      <div> <a href="/releases">Clear filters</a> </div>
+    </div>  
+    <% end %>
+    
+  </div>
+
+  <%if session.fetch(:user_id) == nil%>
+
+  <%@service_id_array.each do |id|%>
+
+  <%releases = @matching_releases.where({:service_id => id}).order({:title => :asc})%>
+
+  <%proxy = releases.first%>
+
+  <%if proxy != nil%>
+
+  <div class="mx-auto" style="width: 200px;">
+      <h1> <%=proxy.service.name%> </h1>
+      <%= paginate releases %>
+  </div>
+
   <div>
-    <h1>
-    <%if session.fetch(:user_id) != nil%>
-      Titles Available on Your Subscribed Services
-    <%elsif session.fetch(:user_id) == nil%>
-      All Titles
-    <%end%>
-    </h1>
-  </div>
-</div>
+    <div>
+      <table border="1">
+        <tr>
 
-<hr>
+          <th>
+            Title
+          </th>
 
-<div class = "container">
-  <div class="row">
-    <%= search_form_for @q do |f| %>
-      <h5>Filter titles:</h5>
+          <th>
+            Year
+          </th>
 
-      <div class="d-flex justify-content-between">
-        <div>
-          <%= f.label :title_cont, "Title containing:" %>
-          <%= f.text_field :title_cont, :placeholder => "Enter a few characters" %>
-        </div>
+          <th>
+            Streaming Service
+          </th>
 
-        <div>
-          <%= f.label :year_gteq, "Released after:" %>
-          <%= f.text_field :year_gteq, :placeholder => "Year greater than or equal to" %>
-        </div>
+          <th>
+            Title Type
+          </th>
 
-        <div>
-          <%= f.label :year_lteq, "Released before:" %>
-          <%= f.text_field :year_lteq, :placeholder => "Year less than or equal to" %>
-        </div>
-
-        <div>
-        <%= f.label :title_type_eq, "Type of Content:" %>
-        <%= f.select :title_type_eq, options_from_collection_for_select(Release.all.distinct(:title_type), :title_type, :title_type, @q.title_type_eq), { :include_blank => true } %>
-        </div>
-
-        <div>
-        <%= f.label :service_api_id_eq, "Service:" %>
-        <%= f.select :service_api_id_eq, options_from_collection_for_select(Source.all, :api_id, :name, @q.service_api_id_eq), { :include_blank => true } %>
-        </div>
-
-      </div>
-  </div>
-
-  <div class="d-grid gap-2">
-    <div class="mt-1"> <%= f.submit :class => "btn btn-primary btn-block" %> </div>
+          <th>
+          </th>
+        </tr>
         
-    <div> <a href="/releases">Clear filters</a> </div>
-  </div>  
-  <% end %>
+        <%releases.each do |title|%>
+        
+        <tr>
+
+          <td>
+            <%= title.title %>
+          </td>
+
+          <td>
+            <%= title.year %>
+          </td>
+
+          <td>
+            <%= title.service.name %>
+          </td>
+
+          <td>
+            <%= title.title_type %>
+          </td>
+
+          <td>
+            <a href="https://www.imdb.com/title/<%= title.imdb_id %>/" target="_blank">
+              See details
+            </a>
+          </td>
   
-</div>
-
-<%if session.fetch(:user_id) == nil%>
-
-<%@service_id_array.each do |id|%>
-
-<%releases = @matching_releases.where({:service_id => id}).order({:title => :asc})%>
-
-<%proxy = releases.first%>
-
-<%if proxy != nil%>
-
-<div>
-    <h1> <%=proxy.service.name%> </h1>
-    <%= paginate releases %>
-</div>
-
-<div>
-  <div>
-    <table border="1">
-      <tr>
-
-        <th>
-          Title
-        </th>
-
-        <th>
-          Year
-        </th>
-
-        <th>
-          Streaming Service
-        </th>
-
-        <th>
-          Title Type
-        </th>
-
-        <th>
-        </th>
-      </tr>
-      
-      <%releases.each do |title|%>
-      
-      <tr>
-
-        <td>
-          <%= title.title %>
-        </td>
-
-        <td>
-          <%= title.year %>
-        </td>
-
-        <td>
-          <%= title.service.name %>
-        </td>
-
-        <td>
-          <%= title.title_type %>
-        </td>
-
-        <td>
-          <a href="https://www.imdb.com/title/<%= title.imdb_id %>/" target="_blank">
-            See details
-          </a>
-        </td>
- 
-      </tr>
-      <% end %>
-    </table>
+        </tr>
+        <% end %>
+      </table>
+    </div>
   </div>
-</div>
 
-<%end%>
+  <%end%>
 
-<%end%>
+  <%end%>
 
-<%else%>
+  <%else%>
 
-<%@service_id_array.each do |id|%>
+  <%@service_id_array.each do |id|%>
 
-<%if @users_streaming_services.include?(id) == true%>
+  <%if @users_streaming_services.include?(id) == true%>
 
-<%releases = @matching_releases.where({:service_id => id}).order({:title => :asc})%>
+  <%releases = @matching_releases.where({:service_id => id}).order({:title => :asc})%>
 
-<%proxy = releases.first%>
+  <%proxy = releases.first%>
 
-<%if proxy != nil%>
+  <%if proxy != nil%>
 
-<div class="mx-auto" style="width: 200px;">
-    <h1> <%=proxy.service.name%> </h1>
-    <%= paginate releases %>
-</div>
+  <div class="mx-auto" style="width: 200px;">
+      <h1> <%=proxy.service.name%> </h1>
+      <%= paginate releases %>
+  </div>
 
-<div>
-  <div>
-    <table border="1">
-      <tr>
+  <!-- Need to fix/remove images, put spaces in-between cards, and display cards side by side-->
 
-        <th>
-          Title
-        </th>
+  <%releases.each do |title|%>
 
-        <th>
-          Year
-        </th>
+  <div class="wrapper">
+    <div class="card">
+        <img src="https://robohash.org/ipsameligendivoluptatem.png?size=300x300&set=set1" class="card-img-top" alt="..." width="10" height="10">
+      <div class="card-body">
+        <p class="card-text"> <strong>Title: </strong> <%= title.title %> </p>
+      </div>
 
-        <th>
-          Streaming Service
-        </th>
-
-        <th>
-          Title Type
-        </th>
-
-        <th>
-        </th>
-
-        <th>
-        </th>
-      </tr>
-      
-      <%releases.each do |title|%>
-      
-      <tr>
-
-        <td>
-          <%= title.title %>
-        </td>
-
-        <td>
-          <%= title.year %>
-        </td>
-
-        <td>
-          <%= title.service.name %>
-        </td>
-
-        <td>
-          <%= title.title_type %>
-        </td>
-
-        <td>
-          <a href="https://www.imdb.com/title/<%= title.imdb_id %>/" target="_blank">
-            See details
-          </a>
-        </td>
-
-        <td>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item list-group-item-primary"><strong>Year: </strong> <%= title.year %></li>
+        <li class="list-group-item list-group-item-primary"><strong>Streaming Service: </strong> <%= title.service.name %></li>
+        <li class="list-group-item list-group-item-primary"><strong>Type of Content: </strong> <%= title.title_type %></li>
+        <li class="list-group-item list-group-item-primary"><a href="https://www.imdb.com/title/<%= title.imdb_id %>/" target="_blank">
+                See details
+              </a> </li>
+        <li class="list-group-item list-group-item-primary">
           <form action="/insert_watchlist_title" method="post">
 
-            <input id="title_id_box" type="hidden" value="<%=title.api_id%>" name="query_title_id">
+              <input id="title_id_box" type="hidden" value="<%=title.api_id%>" name="query_title_id">
 
-            <button>Add to your watchlist</button>
+              <span class="btn btn-primary btn-block">Add to your watchlist</span >
           </form>
-        </td>
-      </tr>
+        </li>
+      </ul>
+
       <% end %>
-    </table>
+      
+     
+    </div>
   </div>
+
+  <%end%>
+
+  <%end%>
+
+  <%end%>
+
+  <%end%>
+
+  <hr>
 </div>
-
-<%end%>
-
-<%end%>
-
-<%end%>
-
-<%end%>
-
-<hr>
