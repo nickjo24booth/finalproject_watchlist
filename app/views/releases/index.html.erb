@@ -12,38 +12,48 @@
 
 <hr>
 
-<%= search_form_for @q do |f| %>
-  <p>Filter titles:</p>
+<div class = "container">
+  <div class="row">
+    <%= search_form_for @q do |f| %>
+      <h5>Filter titles:</h5>
 
-  <div>
-    <%= f.label :title_cont, "Title containing" %>
-    <%= f.text_field :title_cont, :placeholder => "Enter a few characters" %>
+      <div class="d-flex justify-content-between">
+        <div>
+          <%= f.label :title_cont, "Title containing:" %>
+          <%= f.text_field :title_cont, :placeholder => "Enter a few characters" %>
+        </div>
+
+        <div>
+          <%= f.label :year_gteq, "Released after:" %>
+          <%= f.text_field :year_gteq, :placeholder => "Year greater than or equal to" %>
+        </div>
+
+        <div>
+          <%= f.label :year_lteq, "Released before:" %>
+          <%= f.text_field :year_lteq, :placeholder => "Year less than or equal to" %>
+        </div>
+
+        <div>
+        <%= f.label :title_type_eq, "Type of Content:" %>
+        <%= f.select :title_type_eq, options_from_collection_for_select(Release.all.distinct(:title_type), :title_type, :title_type, @q.title_type_eq), { :include_blank => true } %>
+        </div>
+
+        <div>
+        <%= f.label :service_api_id_eq, "Service:" %>
+        <%= f.select :service_api_id_eq, options_from_collection_for_select(Source.all, :api_id, :name, @q.service_api_id_eq), { :include_blank => true } %>
+        </div>
+
+      </div>
   </div>
 
-  <div>
-    <%= f.label :year_gteq, "Released after" %>
-    <%= f.text_field :year_gteq, :placeholder => "Year greater than or equal to" %>
-  </div>
-
-  <div>
-    <%= f.label :year_lteq, "Released before" %>
-    <%= f.text_field :year_lteq, :placeholder => "Year less than or equal to" %>
-  </div>
-
-  <div>
-  <%= f.label :title_type_eq, "Type of Content" %>
-  <%= f.select :title_type_eq, options_from_collection_for_select(Release.all.distinct(:title_type), :title_type, :title_type, @q.title_type_eq), { :include_blank => true } %>
-  </div>
-
-  <div>
-  <%= f.label :service_api_id_eq, "Service" %>
-  <%= f.select :service_api_id_eq, options_from_collection_for_select(Source.all, :api_id, :name, @q.service_api_id_eq), { :include_blank => true } %>
-  </div>
-
-  <%= f.submit :class => "btn btn-primary btn-block" %>
+  <div class="d-grid gap-2">
+    <div class="mt-1"> <%= f.submit :class => "btn btn-primary btn-block" %> </div>
+        
+    <div> <a href="/releases">Clear filters</a> </div>
+  </div>  
+  <% end %>
   
-  <a href="/releases">Clear filters</a>
-<% end %>
+</div>
 
 <%if session.fetch(:user_id) == nil%>
 
@@ -133,7 +143,7 @@
 
 <%if proxy != nil%>
 
-<div>
+<div class="mx-auto" style="width: 200px;">
     <h1> <%=proxy.service.name%> </h1>
     <%= paginate releases %>
 </div>
