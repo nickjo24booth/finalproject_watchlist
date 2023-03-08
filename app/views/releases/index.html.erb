@@ -87,11 +87,11 @@
               </a> 
         </li>
       </ul>
-
-      <% end %>
       
     </div>
   </div>
+
+    <% end %>
 
   <%end%>
 
@@ -118,7 +118,7 @@
 
   <%releases.each do |title|%>
 
-  <div class="wrapper d-flex">
+  <div class="wrapper d-flex justify-content-between">
     <div class="card mt-5">
       <div class="card-body">
         <p class="card-text"> <strong>Title: </strong> <%= title.title %> </p>
@@ -140,12 +140,11 @@
           </form>
         </li>
       </ul>
-
-      <% end %>
-      
      
     </div>
   </div>
+
+    <% end %>
 
   <%end%>
 

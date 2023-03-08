@@ -1,253 +1,255 @@
-<div>
+<div class="container py-5">  
   <div>
-    <h1>
-      <%=@current_user.first_name%> 
-      <%=@current_user.last_name%>'s Watchlist Titles
-    </h1>
+    <div>
+      <h1>
+        <%=@current_user.first_name%> 
+        <%=@current_user.last_name%>'s Watchlist Titles
+      </h1>
+    </div>
   </div>
-</div>
 
-<hr>
+  <hr>
 
-<div>
   <div>
-    
-    <form action="/insert_watchlist_title" method="post">
+    <div>
+      
+      <form action="/insert_watchlist_title" method="post">
 
-        <select id="title_id_box" name="query_title_id">
+          <select id="title_id_box" name="query_title_id">
 
-          <%@all_titles.each do |title| %>
+            <%@all_titles.each do |title| %>
 
-          <option value = "<%=title.api_id%>"> 
-            <%=title.title%>
-          </option>
+            <option value = "<%=title.api_id%>"> 
+              <%=title.title%>
+            </option>
 
-          <%end%>
+            <%end%>
 
-        </select>
+          </select>
 
-      <button>
-        Add to your watchlist!
-      </button>
-    </form>
+        <button class="btn btn-primary btn-block">
+          Add to your watchlist!
+        </button>
+      </form>
+    </div>
   </div>
-</div>
 
-<hr>
+  <hr>
 
-<div>
-<h2> Not Yet Started </h2>
   <div>
-    <table border="1">
-      <tr>
+  <h2> Not Yet Started </h2>
+    <div>
+      <table border="1">
+        <tr>
 
-        <th>
-          Title
-        </th>
+          <th>
+            Title
+          </th>
 
-        <th>
-          Service
-        </th>
+          <th>
+            Service
+          </th>
 
-        <th>
-          Last Update
-        </th>
+          <th>
+            Last Update
+          </th>
 
-        <th>
-        </th>
+          <th>
+          </th>
 
-        <th>
-        </th>
+          <th>
+          </th>
 
-        <th>
-        </th>
-      </tr>
+          <th>
+          </th>
+        </tr>
 
-      <% @not_started.each do |a_watchlist_title| %>
-      <tr>
+        <% @not_started.each do |a_watchlist_title| %>
+        <tr>
 
-        <td>
-          <%= a_watchlist_title.release.title %>
-        </td>
+          <td>
+            <%= a_watchlist_title.release.title %>
+          </td>
 
-        <td>
-          <%= a_watchlist_title.service.name %>
-        </td>
+          <td>
+            <%= a_watchlist_title.service.name %>
+          </td>
 
-        <td>
-          <%= time_ago_in_words(a_watchlist_title.updated_at) %> ago
-        </td>
+          <td>
+            <%= time_ago_in_words(a_watchlist_title.updated_at) %> ago
+          </td>
 
-        <td>
-          <form action="/modify_watchlist_title/<%= a_watchlist_title.id%>" method="post">
+          <td>
+            <form action="/modify_watchlist_title/<%= a_watchlist_title.id%>" method="post">
 
-            <input id="status_id_box" type="hidden" value= 2 name="query_status_id">
+              <input id="status_id_box" type="hidden" value= 2 name="query_status_id">
 
-            <button>Move to In progress</button>
-          </form>
-        </td>
+              <button>Move to In progress</button>
+            </form>
+          </td>
 
-        <td>
-          <form action="/modify_watchlist_title/<%= a_watchlist_title.id%>" method="post">
+          <td>
+            <form action="/modify_watchlist_title/<%= a_watchlist_title.id%>" method="post">
 
-            <input id="status_id_box" type="hidden" value= 3 name="query_status_id">
+              <input id="status_id_box" type="hidden" value= 3 name="query_status_id">
 
-            <button>Move to Completed</button>
-          </form>
-        </td>
+              <button>Move to Completed</button>
+            </form>
+          </td>
 
-        <td>
-          <a href="/delete_watchlist_title/<%= a_watchlist_title.id %>">
-            Remove from watchlist
-          </a>
-        </td>
-      </tr>
-      <% end %>
-    </table>
+          <td>
+            <a href="/delete_watchlist_title/<%= a_watchlist_title.id %>">
+              Remove from watchlist
+            </a>
+          </td>
+        </tr>
+        <% end %>
+      </table>
+    </div>
   </div>
-</div>
 
-<div>
-<h2> In progress </h2>
   <div>
-    <table border="1">
-      <tr>
+  <h2> In progress </h2>
+    <div>
+      <table border="1">
+        <tr>
 
-        <th>
-          Title
-        </th>
+          <th>
+            Title
+          </th>
 
-        <th>
-          Service
-        </th>
+          <th>
+            Service
+          </th>
 
-        <th>
-          Last Update
-        </th>
+          <th>
+            Last Update
+          </th>
 
-        <th>
-        </th>
+          <th>
+          </th>
 
-        <th>
-        </th>
+          <th>
+          </th>
 
-        <th>
-        </th>
-      </tr>
+          <th>
+          </th>
+        </tr>
 
-      <% @in_progress.each do |a_watchlist_title| %>
-      <tr>
+        <% @in_progress.each do |a_watchlist_title| %>
+        <tr>
 
-        <td>
-          <%= a_watchlist_title.release.title %>
-        </td>
+          <td>
+            <%= a_watchlist_title.release.title %>
+          </td>
 
-        <td>
-          <%= a_watchlist_title.service.name %>
-        </td>
+          <td>
+            <%= a_watchlist_title.service.name %>
+          </td>
 
-        <td>
-          <%= time_ago_in_words(a_watchlist_title.updated_at) %> ago
-        </td>
+          <td>
+            <%= time_ago_in_words(a_watchlist_title.updated_at) %> ago
+          </td>
 
-        <td>
-          <form action="/modify_watchlist_title/<%= a_watchlist_title.id%>" method="post">
+          <td>
+            <form action="/modify_watchlist_title/<%= a_watchlist_title.id%>" method="post">
 
-            <input id="status_id_box" type="hidden" value= 3 name="query_status_id">
+              <input id="status_id_box" type="hidden" value= 3 name="query_status_id">
 
-            <button>Move to Completed</button>
-          </form>
-        </td>
+              <button>Move to Completed</button>
+            </form>
+          </td>
 
-        <td>
-          <form action="/modify_watchlist_title/<%= a_watchlist_title.id%>" method="post">
+          <td>
+            <form action="/modify_watchlist_title/<%= a_watchlist_title.id%>" method="post">
 
-            <input id="status_id_box" type="hidden" value= 1 name="query_status_id">
+              <input id="status_id_box" type="hidden" value= 1 name="query_status_id">
 
-            <button>Move Back to Not Started</button>
-          </form>
-        </td>
+              <button>Move Back to Not Started</button>
+            </form>
+          </td>
 
-        <td>
-          <a href="/delete_watchlist_title/<%= a_watchlist_title.id %>">
-            Remove from watchlist
-          </a>
-        </td>
-      </tr>
-      <% end %>
-    </table>
+          <td>
+            <a href="/delete_watchlist_title/<%= a_watchlist_title.id %>">
+              Remove from watchlist
+            </a>
+          </td>
+        </tr>
+        <% end %>
+      </table>
+    </div>
   </div>
-</div>
 
-<div>
-<h2> Completed </h2>
   <div>
-    <table border="1">
-      <tr>
+  <h2> Completed </h2>
+    <div>
+      <table border="1">
+        <tr>
 
-        <th>
-          Title
-        </th>
+          <th>
+            Title
+          </th>
 
-        <th>
-          Service
-        </th>
+          <th>
+            Service
+          </th>
 
-        <th>
-          Last Update
-        </th>
+          <th>
+            Last Update
+          </th>
 
-        <th>
-        </th>
+          <th>
+          </th>
 
-        <th>
-        </th>
+          <th>
+          </th>
 
-        <th>
-        </th>
-      </tr>
+          <th>
+          </th>
+        </tr>
 
-      <% @completed.each do |a_watchlist_title| %>
-      <tr>
+        <% @completed.each do |a_watchlist_title| %>
+        <tr>
 
-        <td>
-          <%= a_watchlist_title.release.title %>
-        </td>
+          <td>
+            <%= a_watchlist_title.release.title %>
+          </td>
 
-        <td>
-          <%= a_watchlist_title.service.name %>
-        </td>
+          <td>
+            <%= a_watchlist_title.service.name %>
+          </td>
 
-        <td>
-          <%= time_ago_in_words(a_watchlist_title.updated_at) %> ago
-        </td>
+          <td>
+            <%= time_ago_in_words(a_watchlist_title.updated_at) %> ago
+          </td>
 
-        <td>
-          <form action="/modify_watchlist_title/<%= a_watchlist_title.id%>" method="post">
+          <td>
+            <form action="/modify_watchlist_title/<%= a_watchlist_title.id%>" method="post">
 
-            <input id="status_id_box" type="hidden" value= 2 name="query_status_id">
+              <input id="status_id_box" type="hidden" value= 2 name="query_status_id">
 
-            <button>Move Back to In Progress</button>
-          </form>
-        </td>
+              <button>Move Back to In Progress</button>
+            </form>
+          </td>
 
-        <td>
-          <form action="/modify_watchlist_title/<%= a_watchlist_title.id%>" method="post">
+          <td>
+            <form action="/modify_watchlist_title/<%= a_watchlist_title.id%>" method="post">
 
-            <input id="status_id_box" type="hidden" value= 1 name="query_status_id">
+              <input id="status_id_box" type="hidden" value= 1 name="query_status_id">
 
-            <button>Move Back to Not Started</button>
-          </form>
-        </td>
+              <button>Move Back to Not Started</button>
+            </form>
+          </td>
 
-        <td>
-          <a href="/delete_watchlist_title/<%= a_watchlist_title.id %>">
-            Remove from watchlist
-          </a>
-        </td>
-      </tr>
-      <% end %>
-    </table>
+          <td>
+            <a href="/delete_watchlist_title/<%= a_watchlist_title.id %>">
+              Remove from watchlist
+            </a>
+          </td>
+        </tr>
+        <% end %>
+      </table>
+    </div>
   </div>
+  <hr>
 </div>
-<hr>

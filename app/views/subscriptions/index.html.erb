@@ -1,76 +1,103 @@
-<div>
+ <div class="container"> 
   <div>
-    <h1>
-      <%=@current_user.first_name%> 
-      <%=@current_user.last_name%>'s Subscriptions
-    </h1>
+    <div>
+      <h1>
+        <%=@current_user.first_name%> 
+        <%=@current_user.last_name%>'s Subscriptions
+      </h1>
+    </div>
+  </div>
+
+  <hr>
+
+  <div>
+    <div>
+
+      <form action="/insert_subscription" method="post">
+
+          <select id="service_id_box" name="query_service_id">
+
+            <%@all_services.each do |service| %>
+
+            <option value = "<%=service.api_id%>"> 
+              <%=service.name%>
+            </option>
+
+            <%end%>
+
+          </select>
+
+        <button class="btn btn-primary btn-block">
+          I'm subscribed!
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <hr>
+
+  <% @list_of_subscriptions.each do |a_subscription| %>
+
+  <div class="wrapper d-flex justify-content-between">
+    <div class="card mt-2">
+      <div class="card-body">
+        <p class="card-text"> <strong>Streaming Service: </strong> <%= a_subscription.service.name %> </p>
+      </div>
+
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item list-group-item-info"><strong>Subscribed: </strong> <%= time_ago_in_words(a_subscription.created_at) %> ago</li>
+        <li class="list-group-item list-group-item-info"> <a href="/delete_subscription/<%= a_subscription.id %>">
+                No longer subscribed
+              </a> 
+        </li>
+      </ul>
+     
+    </div>
+  </div>
+
+  <%end%>
+
+  <!-- 
+
+  <div>
+    <div>
+      <table border="1">
+        <tr>
+
+          <th>
+            Service
+          </th>
+
+          <th>
+            Subscribed
+          </th>
+
+          <th>
+          </th>
+        </tr>
+
+        <% @list_of_subscriptions.each do |a_subscription| %>
+        <tr>
+
+          <td>
+            <%= a_subscription.service.name %>
+          </td>
+
+          <td>
+            <%= time_ago_in_words(a_subscription.created_at) %> ago
+          </td>
+
+          <td>
+            <a href="/delete_subscription/<%= a_subscription.id %>">
+              No longer subscribed
+            </a>
+          </td>
+        </tr>
+        <% end %>
+      </table>
+    </div>
   </div>
 </div>
-
-<hr>
-
-<div>
-  <div>
-
-    <form action="/insert_subscription" method="post">
-
-        <select id="service_id_box" name="query_service_id">
-
-          <%@all_services.each do |service| %>
-
-          <option value = "<%=service.api_id%>"> 
-            <%=service.name%>
-          </option>
-
-          <%end%>
-
-        </select>
-
-      <button>
-        I'm subscribed!
-      </button>
-    </form>
-  </div>
-</div>
-
-<hr>
-<div>
-  <div>
-    <table border="1">
-      <tr>
-
-        <th>
-          Service
-        </th>
-
-        <th>
-          Subscribed
-        </th>
-
-        <th>
-        </th>
-      </tr>
-
-      <% @list_of_subscriptions.each do |a_subscription| %>
-      <tr>
-
-        <td>
-          <%= a_subscription.service.name %>
-        </td>
-
-        <td>
-          <%= time_ago_in_words(a_subscription.created_at) %> ago
-        </td>
-
-        <td>
-          <a href="/delete_subscription/<%= a_subscription.id %>">
-            No longer subscribed
-          </a>
-        </td>
-      </tr>
-      <% end %>
-    </table>
-  </div>
-</div>
+--> 
 
 <hr>
