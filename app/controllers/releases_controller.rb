@@ -1,7 +1,7 @@
 class ReleasesController < ApplicationController
   def index
     @q = Release.ransack(params[:q])
-    @matching_releases = @q.result(:distinct => true).includes(:service).page(params[:page]).per(500)
+    @matching_releases = @q.result(:distinct => true).includes(:service).page(params[:page]).per(100)
 
     #@matching_releases = Release.all.order({ :service_id => :asc }).page(params[:page]).per(500)
 

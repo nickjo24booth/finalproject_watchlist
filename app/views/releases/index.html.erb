@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container py-5">
     <div>
       <h1>
       <%if session.fetch(:user_id) != nil%>
@@ -35,7 +35,7 @@
 
           <div>
           <%= f.label :title_type_eq, "Type of Content:" %>
-          <%= f.select :title_type_eq, options_from_collection_for_select(Release.all.distinct(:title_type), :title_type, :title_type, @q.title_type_eq), { :include_blank => true } %>
+          <%= f.select :title_type_eq, Release.distinct.pluck(:title_type), { :include_blank => true } %>
           </div>
 
           <div>
@@ -70,60 +70,26 @@
       <%= paginate releases %>
   </div>
 
-  <div>
-    <div>
-      <table border="1">
-        <tr>
+  <%releases.each do |title|%>
 
-          <th>
-            Title
-          </th>
+  <div class="wrapper mx-auto">
+    <div class="card mt-5 mx-auto">
+      <div class="card-body">
+        <p class="card-text"> <strong>Title: </strong> <%= title.title %> </p>
+      </div>
 
-          <th>
-            Year
-          </th>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item list-group-item-info"><strong>Year: </strong> <%= title.year %></li>
+        <li class="list-group-item list-group-item-info"><strong>Streaming Service: </strong> <%= title.service.name %></li>
+        <li class="list-group-item list-group-item-info"><strong>Type of Content: </strong> <%= title.title_type %></li>
+        <li class="list-group-item list-group-item-info"><a href="https://www.imdb.com/title/<%= title.imdb_id %>/" target="_blank">
+                See details
+              </a> 
+        </li>
+      </ul>
 
-          <th>
-            Streaming Service
-          </th>
-
-          <th>
-            Title Type
-          </th>
-
-          <th>
-          </th>
-        </tr>
-        
-        <%releases.each do |title|%>
-        
-        <tr>
-
-          <td>
-            <%= title.title %>
-          </td>
-
-          <td>
-            <%= title.year %>
-          </td>
-
-          <td>
-            <%= title.service.name %>
-          </td>
-
-          <td>
-            <%= title.title_type %>
-          </td>
-
-          <td>
-            <a href="https://www.imdb.com/title/<%= title.imdb_id %>/" target="_blank">
-              See details
-            </a>
-          </td>
-  
-        </tr>
-        <% end %>
-      </table>
+      <% end %>
+      
     </div>
   </div>
 
@@ -148,25 +114,24 @@
       <%= paginate releases %>
   </div>
 
-  <!-- Need to fix/remove images, put spaces in-between cards, and display cards side by side-->
+  <!-- Need to fix/remove images and display cards side by side -->
 
   <%releases.each do |title|%>
 
-  <div class="wrapper">
-    <div class="card">
-        <img src="https://robohash.org/ipsameligendivoluptatem.png?size=300x300&set=set1" class="card-img-top" alt="..." width="10" height="10">
+  <div class="wrapper d-flex">
+    <div class="card mt-5">
       <div class="card-body">
         <p class="card-text"> <strong>Title: </strong> <%= title.title %> </p>
       </div>
 
       <ul class="list-group list-group-flush">
-        <li class="list-group-item list-group-item-primary"><strong>Year: </strong> <%= title.year %></li>
-        <li class="list-group-item list-group-item-primary"><strong>Streaming Service: </strong> <%= title.service.name %></li>
-        <li class="list-group-item list-group-item-primary"><strong>Type of Content: </strong> <%= title.title_type %></li>
-        <li class="list-group-item list-group-item-primary"><a href="https://www.imdb.com/title/<%= title.imdb_id %>/" target="_blank">
+        <li class="list-group-item list-group-item-info"><strong>Year: </strong> <%= title.year %></li>
+        <li class="list-group-item list-group-item-info"><strong>Streaming Service: </strong> <%= title.service.name %></li>
+        <li class="list-group-item list-group-item-info"><strong>Type of Content: </strong> <%= title.title_type %></li>
+        <li class="list-group-item list-group-item-info"><a href="https://www.imdb.com/title/<%= title.imdb_id %>/" target="_blank">
                 See details
               </a> </li>
-        <li class="list-group-item list-group-item-primary">
+        <li class="list-group-item list-group-item-info">
           <form action="/insert_watchlist_title" method="post">
 
               <input id="title_id_box" type="hidden" value="<%=title.api_id%>" name="query_title_id">

@@ -20,71 +20,122 @@
   </head>
 
   <body>
+    <div class="container py-5">
 
-  <nav>
 
-    <ul>
+      <nav class="navbar navbar-expand-lg bg-light mb-4">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">Streaming Watchlist App</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Explore
+                  </a>
+                  <ul class="dropdown-menu">
+                    <%if session.fetch(:user_id) == nil%>
+                      <li><a class="dropdown-item" href="/releases">All Titles</a></li>
+                    <%else%>
+                      <li><a class="dropdown-item" href="/releases">Available Titles</a></li>
+                      <li><hr class="dropdown-divider"></li>
+                      <li><a class="dropdown-item" href="/subscriptions">My Streaming Subscriptions</a></li>
+                      <li><a class="dropdown-item" href="/watchlist_titles">My Watchlist</a></li>
+                    <%end%>
+                  </ul>
+                </li>
+              </ul>
+              <ul class="d-flex" style="list-style: none;">
+                <%if session.fetch(:user_id) == nil%>
+                  <li class="nav-item mx-4">
+                    <a class="nav-link active" aria-current="page" href="/user_sign_in">Sign In</a>
+                  </li>
 
-      <%if session.fetch(:user_id) == nil%>
-      <li>
-        <a href="/user_sign_in">Sign In</a>
-      </li>
-    
-      <li>
-        <a href="/user_sign_up">Sign Up</a>
-      </li>
+                  <li class="nav-item mx-4">
+                    <a class="nav-link active" aria-current="page" href="/user_sign_up">Sign Up</a>
+                  </li>
+                <%else%>
+                  <li class="nav-item mx-4 mt-2">
+                    <a class="nav-link active" aria-current="page" href="/edit_user_profile">Update My Account</a>
+                  </li>
 
-      <li>
-        <a href="/releases">
-          All Titles
-        </a>
-      </li>
-      <%end%>
-
-      <%if session.fetch(:user_id) != nil%>
-      <li>
-        <a href="/user_sign_out">Sign Out</a>
-      </li>
-
-      <li>
-        <a href="/edit_user_profile">Update My Account</a>
-      </li>
-
-      <li>
-        <a href="/subscriptions">
-          My Subscriptions
-        </a>
-      </li>
-
-      <li>
-        <a href="/releases">
-          Available Titles
-        </a>
-      </li>
-
-      <li>
-        <a href="/watchlist_titles">
-          My Watchlist
-        </a>
-      </li>
-      <%end%>
-
-    </ul>
-
+                  <li class="nav-item mx-4 mt-2">
+                    <a class="nav-link active" aria-current="page" href="/user_sign_out">Sign Out</a>
+                  </li>
+                <%end%>
+              </ul>
+          </div>
+      </div>
     </nav>
 
-    <%if notice.present? %>
-      <div class="alert alert-success" role="alert">
-        <%= notice%>
-      </div>
-    <%end%>
+    <!-- Prior nav bar
+      <nav>
 
-    <%if alert.present? %>
-      <div class="alert alert-danger" role="alert">
-        <%= alert%>
-      </div>
-    <%end%>
+        <ul>
 
-  <%= yield %>
+          <%if session.fetch(:user_id) == nil%>
+          <li>
+            <a href="/user_sign_in">Sign In</a>
+          </li>
+        
+          <li>
+            <a href="/user_sign_up">Sign Up</a>
+          </li>
+
+          <li>
+            <a href="/releases">
+              All Titles
+            </a>
+          </li>
+          <%end%>
+
+          <%if session.fetch(:user_id) != nil%>
+          <li>
+            <a href="/user_sign_out">Sign Out</a>
+          </li>
+
+          <li>
+            <a href="/edit_user_profile">Update My Account</a>
+          </li>
+
+          <li>
+            <a href="/subscriptions">
+              My Subscriptions
+            </a>
+          </li>
+
+          <li>
+            <a href="/releases">
+              Available Titles
+            </a>
+          </li>
+
+          <li>
+            <a href="/watchlist_titles">
+              My Watchlist
+            </a>
+          </li>
+          <%end%>
+
+        </ul>
+
+        </nav> 
+        -->
+
+        <%if notice.present? %>
+          <div class="alert alert-success" role="alert">
+            <%= notice%>
+          </div>
+        <%end%>
+
+        <%if alert.present? %>
+          <div class="alert alert-danger" role="alert">
+            <%= alert%>
+          </div>
+        <%end%>
+    </div>
+      <%= yield %>
   </body>
 </html>
