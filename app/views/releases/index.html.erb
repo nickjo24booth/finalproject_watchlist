@@ -24,12 +24,12 @@
           </div>
 
           <div>
-            <%= f.label :year_gteq, "Released after:" %>
+            <%= f.label :year_gteq, "Released during or after:" %>
             <%= f.text_field :year_gteq, :placeholder => "Year greater than or equal to" %>
           </div>
 
           <div>
-            <%= f.label :year_lteq, "Released before:" %>
+            <%= f.label :year_lteq, "Released during or before:" %>
             <%= f.text_field :year_lteq, :placeholder => "Year less than or equal to" %>
           </div>
 
@@ -39,8 +39,12 @@
           </div>
 
           <div>
-          <%= f.label :service_api_id_eq, "Service:" %>
+          <%= f.label :service_api_id_eq, "Streaming Service:" %>
+          <%if session.fetch(:user_id) == nil%>
           <%= f.select :service_api_id_eq, options_from_collection_for_select(Source.all, :api_id, :name, @q.service_api_id_eq), { :include_blank => true } %>
+          <%else%>
+          <%= f.select :service_api_id_eq, options_from_collection_for_select(Source.where({:api_id => @users_streaming_services}), :api_id, :name, @q.service_api_id_eq), { :include_blank => true } %>
+          <%end%>
           </div>
 
         </div>
@@ -115,8 +119,6 @@
       <h1> <%=proxy.service.name%> </h1>
       <%= paginate releases %>
   </div>
-
-  <!-- Need to fix/remove images and display cards side by side -->
 
   <div class="row">
     <%releases.each do |title|%>

@@ -49,7 +49,7 @@ class UserAuthenticationController < ApplicationController
     if save_status == true
       session[:user_id] = @user.id
 
-      redirect_to("/", { :notice => "User account created successfully." })
+      redirect_to("/", { :notice => "User account created successfully! Your first step should be to click on the explore dropdown menu, navigate to your subscriptions, and add the services you're subscribed to." })
     else
       redirect_to("/user_sign_up", { :alert => @user.errors.full_messages.to_sentence })
     end
