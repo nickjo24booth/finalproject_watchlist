@@ -1,6 +1,12 @@
 class WatchlistTitlesController < ApplicationController
   def index
-    @all_titles = Release.all.order({ :title => :asc })
+    if session.fetch(:user_id) != nil
+      user_streaming_services = Subscription.where({ :user_id => @current_user.id }).map_relation_to_array(:service_id)
+    else
+      user_streaming_services = Source.all.map_relation_to_array(:api_id)
+    end
+    
+    @user_available_titles = Release.where({:service_id => user_streaming_services}).order({ :title => :asc })
 
     matching_watchlist_titles = @current_user.watchlist_titles
 

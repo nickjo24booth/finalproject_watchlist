@@ -70,28 +70,30 @@
       <%= paginate releases %>
   </div>
 
-  <%releases.each do |title|%>
+  <div class="row">
+    <%releases.each do |title|%>
+    <div class="col-4">
+      <div class="wrapper mx-auto">
+        <div class="card mt-5 mx-auto">
+          <div class="card-body">
+            <p class="card-text"> <strong>Title: </strong> <%= title.title %> </p>
+          </div>
 
-  <div class="wrapper mx-auto">
-    <div class="card mt-5 mx-auto">
-      <div class="card-body">
-        <p class="card-text"> <strong>Title: </strong> <%= title.title %> </p>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item list-group-item-info"><strong>Year: </strong> <%= title.year %></li>
+            <li class="list-group-item list-group-item-info"><strong>Streaming Service: </strong> <%= title.service.name %></li>
+            <li class="list-group-item list-group-item-info"><strong>Type of Content: </strong> <%= title.title_type %></li>
+            <li class="list-group-item list-group-item-info"><a href="https://www.imdb.com/title/<%= title.imdb_id %>/" target="_blank">
+                    See details
+                  </a> 
+            </li>
+          </ul>
+          
+        </div>
       </div>
-
-      <ul class="list-group list-group-flush">
-        <li class="list-group-item list-group-item-info"><strong>Year: </strong> <%= title.year %></li>
-        <li class="list-group-item list-group-item-info"><strong>Streaming Service: </strong> <%= title.service.name %></li>
-        <li class="list-group-item list-group-item-info"><strong>Type of Content: </strong> <%= title.title_type %></li>
-        <li class="list-group-item list-group-item-info"><a href="https://www.imdb.com/title/<%= title.imdb_id %>/" target="_blank">
-                See details
-              </a> 
-        </li>
-      </ul>
-      
     </div>
-  </div>
-
     <% end %>
+  </div>
 
   <%end%>
 
@@ -116,35 +118,39 @@
 
   <!-- Need to fix/remove images and display cards side by side -->
 
-  <%releases.each do |title|%>
+  <div class="row">
+    <%releases.each do |title|%>
+    <div class="col-4">
+      <div class="wrapper mx-auto">
+        <div class="card mt-5 mx-auto">
+          <div class="card-body">
+            <p class="card-text"> <strong>Title: </strong> <%= title.title %> </p>
+          </div>
 
-  <div class="wrapper d-flex justify-content-between">
-    <div class="card mt-5">
-      <div class="card-body">
-        <p class="card-text"> <strong>Title: </strong> <%= title.title %> </p>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item list-group-item-info"><strong>Year: </strong> <%= title.year %></li>
+            <li class="list-group-item list-group-item-info"><strong>Streaming Service: </strong> <%= title.service.name %></li>
+            <li class="list-group-item list-group-item-info"><strong>Type of Content: </strong> <%= title.title_type %></li>
+            <li class="list-group-item list-group-item-info"><a href="https://www.imdb.com/title/<%= title.imdb_id %>/" target="_blank">
+                    See details
+                  </a> </li>
+            <li class="list-group-item list-group-item-info">
+              <form action="/insert_watchlist_title" method="post">
+
+                  <input id="title_id_box" type="hidden" value="<%=title.api_id%>" name="query_title_id">
+
+                  <span class="btn btn-primary btn-block">Add to your watchlist</span >
+              </form>
+            </li>
+          </ul>
+        
+        </div>
       </div>
-
-      <ul class="list-group list-group-flush">
-        <li class="list-group-item list-group-item-info"><strong>Year: </strong> <%= title.year %></li>
-        <li class="list-group-item list-group-item-info"><strong>Streaming Service: </strong> <%= title.service.name %></li>
-        <li class="list-group-item list-group-item-info"><strong>Type of Content: </strong> <%= title.title_type %></li>
-        <li class="list-group-item list-group-item-info"><a href="https://www.imdb.com/title/<%= title.imdb_id %>/" target="_blank">
-                See details
-              </a> </li>
-        <li class="list-group-item list-group-item-info">
-          <form action="/insert_watchlist_title" method="post">
-
-              <input id="title_id_box" type="hidden" value="<%=title.api_id%>" name="query_title_id">
-
-              <span class="btn btn-primary btn-block">Add to your watchlist</span >
-          </form>
-        </li>
-      </ul>
-     
     </div>
+    <% end %>
   </div>
 
-    <% end %>
+  
 
   <%end%>
 

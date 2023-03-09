@@ -17,7 +17,7 @@
 
           <select id="title_id_box" name="query_title_id">
 
-            <%@all_titles.each do |title| %>
+            <%@user_available_titles.each do |title| %>
 
             <option value = "<%=title.api_id%>"> 
               <%=title.title%>
@@ -36,220 +36,201 @@
 
   <hr>
 
-  <div>
-  <h2> Not Yet Started </h2>
-    <div>
-      <table border="1">
-        <tr>
+  <div class ="row">
 
-          <th>
-            Title
-          </th>
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-header">
+          <strong>Not Yet Started</strong>
+        </div>
+      
+        <ul id="not_yet_started_list" class="list-group list-group-flush">
+          <% @not_started.each do |a_watchlist_title| %> 
+            <li id="task_23434" class="list-group-item">
 
-          <th>
-            Service
-          </th>
+              <div>
+                <strong>Title: </strong> <%= a_watchlist_title.release.title %>
+              </div>
 
-          <th>
-            Last Update
-          </th>
+              <div>
+                <strong>Service: </strong> <%= a_watchlist_title.service.name %>
+              </div>
 
-          <th>
-          </th>
+              <div>
+                <strong>Last Update: </strong> <%= time_ago_in_words(a_watchlist_title.updated_at) %> ago
+              </div>
 
-          <th>
-          </th>
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="d-grid gap-2">
 
-          <th>
-          </th>
-        </tr>
+                    <form action="/modify_watchlist_title/<%= a_watchlist_title.id%>" method="post">
 
-        <% @not_started.each do |a_watchlist_title| %>
-        <tr>
+                      <input id="status_id_box" type="hidden" value= 2 name="query_status_id">
 
-          <td>
-            <%= a_watchlist_title.release.title %>
-          </td>
+                      <button class="btn btn-link" data-remote="true" rel="nofollow" data-method="patch"> 
+                         <i class="fa-sharp fa-solid fa-pen-to-square"> </i> 
+                      </button>
+                    </form> 
+                  </div>
+                </div>
 
-          <td>
-            <%= a_watchlist_title.service.name %>
-          </td>
+                <div class="col-md-4">
+                  <div class="d-grid gap-2">
 
-          <td>
-            <%= time_ago_in_words(a_watchlist_title.updated_at) %> ago
-          </td>
+                    <form action="/modify_watchlist_title/<%= a_watchlist_title.id%>" method="post">
 
-          <td>
-            <form action="/modify_watchlist_title/<%= a_watchlist_title.id%>" method="post">
+                      <input id="status_id_box" type="hidden" value= 3 name="query_status_id">
 
-              <input id="status_id_box" type="hidden" value= 2 name="query_status_id">
+                      <button class="btn btn-link" data-remote="true" rel="nofollow" data-method="patch"> 
+                         <i class="fa-regular fa-circle-check"> </i> 
+                      </button>
+                    </form> 
+                  </div>
+                </div>
 
-              <button>Move to In progress</button>
-            </form>
-          </td>
-
-          <td>
-            <form action="/modify_watchlist_title/<%= a_watchlist_title.id%>" method="post">
-
-              <input id="status_id_box" type="hidden" value= 3 name="query_status_id">
-
-              <button>Move to Completed</button>
-            </form>
-          </td>
-
-          <td>
-            <a href="/delete_watchlist_title/<%= a_watchlist_title.id %>">
-              Remove from watchlist
-            </a>
-          </td>
-        </tr>
-        <% end %>
-      </table>
+                <div class="col-md-4">
+                  <div class="d-grid gap-2">
+                    <a class="btn btn-link" data-remote="true" rel="nofollow" data-method="delete" href="/delete_watchlist_title/<%= a_watchlist_title.id %>">
+                      <i class="fa-sharp fa-solid fa-trash-can"></i> </a>      
+                  </div>
+                </div>
+              </div>
+            </li>
+          <%end%>
+        </ul>
+      </div>
     </div>
+
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-header">
+          <strong>In Progress</strong>
+        </div>
+      
+        <ul id="not_yet_started_list" class="list-group list-group-flush">
+          <% @in_progress.each do |a_watchlist_title| %> 
+            <li id="task_23434" class="list-group-item">
+
+              <div>
+                <strong>Title: </strong> <%= a_watchlist_title.release.title %>
+              </div>
+
+              <div>
+                <strong>Service: </strong> <%= a_watchlist_title.service.name %>
+              </div>
+
+              <div>
+                <strong>Last Update: </strong> <%= time_ago_in_words(a_watchlist_title.updated_at) %> ago
+              </div>
+
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="d-grid gap-2">
+
+                    <form action="/modify_watchlist_title/<%= a_watchlist_title.id%>" method="post">
+
+                      <input id="status_id_box" type="hidden" value= 3 name="query_status_id">
+
+                      <button class="btn btn-link" data-remote="true" rel="nofollow" data-method="patch"> 
+                         <i class="fa-regular fa-circle-check"> </i> 
+                      </button>
+                    </form> 
+                  </div>
+                </div>
+
+                <div class="col-md-4">
+                  <div class="d-grid gap-2">
+
+                    <form action="/modify_watchlist_title/<%= a_watchlist_title.id%>" method="post">
+
+                      <input id="status_id_box" type="hidden" value= 1 name="query_status_id">
+
+                      <button class="btn btn-link" data-remote="true" rel="nofollow" data-method="patch"> 
+                         <i class="fa-sharp fa-solid fa-backward"> </i> 
+                      </button>
+                    </form> 
+                  </div>
+                </div>
+
+                <div class="col-md-4">
+                  <div class="d-grid gap-2">
+                    <a class="btn btn-link" data-remote="true" rel="nofollow" data-method="delete" href="/delete_watchlist_title/<%= a_watchlist_title.id %>">
+                      <i class="fa-sharp fa-solid fa-trash-can"></i> </a>      
+                  </div>
+                </div>
+              </div>
+            </li>
+          <%end%>
+        </ul>
+      </div>
+    </div>
+  
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-header">
+          <strong>Completed</strong>
+        </div>
+      
+        <ul id="not_yet_started_list" class="list-group list-group-flush">
+          <% @completed.each do |a_watchlist_title| %> 
+            <li id="task_23434" class="list-group-item">
+
+              <div>
+                <strong>Title: </strong> <%= a_watchlist_title.release.title %>
+              </div>
+
+              <div>
+                <strong>Service: </strong> <%= a_watchlist_title.service.name %>
+              </div>
+
+              <div>
+                <strong>Last Update: </strong> <%= time_ago_in_words(a_watchlist_title.updated_at) %> ago
+              </div>
+
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="d-grid gap-2">
+
+                    <form action="/modify_watchlist_title/<%= a_watchlist_title.id%>" method="post">
+
+                      <input id="status_id_box" type="hidden" value= 2 name="query_status_id">
+
+                      <button class="btn btn-link" data-remote="true" rel="nofollow" data-method="patch"> 
+                       <i class="fa-sharp fa-solid fa-pen-to-square"> </i> 
+                      </button>
+                    </form> 
+                  </div>
+                </div>
+
+                <div class="col-md-4">
+                  <div class="d-grid gap-2">
+
+                    <form action="/modify_watchlist_title/<%= a_watchlist_title.id%>" method="post">
+
+                      <input id="status_id_box" type="hidden" value= 1 name="query_status_id">
+
+                      <button class="btn btn-link" data-remote="true" rel="nofollow" data-method="patch"> 
+                       <i class="fa-sharp fa-solid fa-backward"> </i> 
+                      </button>
+                    </form> 
+                  </div>
+                </div>
+
+                <div class="col-md-4">
+                  <div class="d-grid gap-2">
+                    <a class="btn btn-link" data-remote="true" rel="nofollow" data-method="delete" href="/delete_watchlist_title/<%= a_watchlist_title.id %>">
+                      <i class="fa-sharp fa-solid fa-trash-can"></i> </a>      
+                  </div>
+                </div>
+              </div>
+            </li>
+          <%end%>
+        </ul>
+      </div>
+    </div>
+
   </div>
 
-  <div>
-  <h2> In progress </h2>
-    <div>
-      <table border="1">
-        <tr>
-
-          <th>
-            Title
-          </th>
-
-          <th>
-            Service
-          </th>
-
-          <th>
-            Last Update
-          </th>
-
-          <th>
-          </th>
-
-          <th>
-          </th>
-
-          <th>
-          </th>
-        </tr>
-
-        <% @in_progress.each do |a_watchlist_title| %>
-        <tr>
-
-          <td>
-            <%= a_watchlist_title.release.title %>
-          </td>
-
-          <td>
-            <%= a_watchlist_title.service.name %>
-          </td>
-
-          <td>
-            <%= time_ago_in_words(a_watchlist_title.updated_at) %> ago
-          </td>
-
-          <td>
-            <form action="/modify_watchlist_title/<%= a_watchlist_title.id%>" method="post">
-
-              <input id="status_id_box" type="hidden" value= 3 name="query_status_id">
-
-              <button>Move to Completed</button>
-            </form>
-          </td>
-
-          <td>
-            <form action="/modify_watchlist_title/<%= a_watchlist_title.id%>" method="post">
-
-              <input id="status_id_box" type="hidden" value= 1 name="query_status_id">
-
-              <button>Move Back to Not Started</button>
-            </form>
-          </td>
-
-          <td>
-            <a href="/delete_watchlist_title/<%= a_watchlist_title.id %>">
-              Remove from watchlist
-            </a>
-          </td>
-        </tr>
-        <% end %>
-      </table>
-    </div>
-  </div>
-
-  <div>
-  <h2> Completed </h2>
-    <div>
-      <table border="1">
-        <tr>
-
-          <th>
-            Title
-          </th>
-
-          <th>
-            Service
-          </th>
-
-          <th>
-            Last Update
-          </th>
-
-          <th>
-          </th>
-
-          <th>
-          </th>
-
-          <th>
-          </th>
-        </tr>
-
-        <% @completed.each do |a_watchlist_title| %>
-        <tr>
-
-          <td>
-            <%= a_watchlist_title.release.title %>
-          </td>
-
-          <td>
-            <%= a_watchlist_title.service.name %>
-          </td>
-
-          <td>
-            <%= time_ago_in_words(a_watchlist_title.updated_at) %> ago
-          </td>
-
-          <td>
-            <form action="/modify_watchlist_title/<%= a_watchlist_title.id%>" method="post">
-
-              <input id="status_id_box" type="hidden" value= 2 name="query_status_id">
-
-              <button>Move Back to In Progress</button>
-            </form>
-          </td>
-
-          <td>
-            <form action="/modify_watchlist_title/<%= a_watchlist_title.id%>" method="post">
-
-              <input id="status_id_box" type="hidden" value= 1 name="query_status_id">
-
-              <button>Move Back to Not Started</button>
-            </form>
-          </td>
-
-          <td>
-            <a href="/delete_watchlist_title/<%= a_watchlist_title.id %>">
-              Remove from watchlist
-            </a>
-          </td>
-        </tr>
-        <% end %>
-      </table>
-    </div>
-  </div>
   <hr>
 </div>

@@ -36,26 +36,28 @@
 
   <hr>
 
-  <% @list_of_subscriptions.each do |a_subscription| %>
+  <div class="row">
+    <% @list_of_subscriptions.each do |a_subscription| %>
+    <div class="col-4">
+      <div class="wrapper d-flex justify-content-between">
+        <div class="card mt-2">
+          <div class="card-body">
+            <p class="card-text"> <strong>Streaming Service: </strong> <%= a_subscription.service.name %> </p>
+          </div>
 
-  <div class="wrapper d-flex justify-content-between">
-    <div class="card mt-2">
-      <div class="card-body">
-        <p class="card-text"> <strong>Streaming Service: </strong> <%= a_subscription.service.name %> </p>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item list-group-item-info"><strong>Subscribed: </strong> <%= time_ago_in_words(a_subscription.created_at) %> ago</li>
+            <li class="list-group-item list-group-item-info"> <a href="/delete_subscription/<%= a_subscription.id %>">
+                    No longer subscribed
+                  </a> 
+            </li>
+          </ul>
+        
+        </div>
       </div>
-
-      <ul class="list-group list-group-flush">
-        <li class="list-group-item list-group-item-info"><strong>Subscribed: </strong> <%= time_ago_in_words(a_subscription.created_at) %> ago</li>
-        <li class="list-group-item list-group-item-info"> <a href="/delete_subscription/<%= a_subscription.id %>">
-                No longer subscribed
-              </a> 
-        </li>
-      </ul>
-     
-    </div>
+    </div> 
+    <%end%>
   </div>
-
-  <%end%>
 
   <!-- 
 
