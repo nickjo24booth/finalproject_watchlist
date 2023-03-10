@@ -12,7 +12,7 @@ class SubscriptionsController < ApplicationController
 
     matching_subscriptions = @current_user.subscriptions
 
-    @list_of_subscriptions = matching_subscriptions.order({ :service => :desc })
+    @list_of_subscriptions = matching_subscriptions.order({ :service_id => :desc })
 
     render({ :template => "subscriptions/index.html.erb" })
   end
