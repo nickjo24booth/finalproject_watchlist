@@ -2,8 +2,8 @@ namespace :api_pull do
   desc "Pull streaming sources and titles from watchmode"
   task sources: :environment do
     Source.destroy_all
-    
-    sources_url = "https://api.watchmode.com/v1/sources/?apiKey=CJ3pKXmnPcgBLUEVstAYuYDvlN4XCY36rfPSEpdU"
+
+    sources_url = "https://api.watchmode.com/v1/sources/?apiKey=#{ENV.fetch("WATCHMODE_KEY")}"
 
     require "open-uri"
     raw_response = URI.open(sources_url).read
@@ -30,7 +30,7 @@ namespace :api_pull do
 
   task contents: :environment do
     Release.destroy_all
-    
+
     require "open-uri"
 
     require "json"
@@ -38,7 +38,7 @@ namespace :api_pull do
     list_of_streamers = Source.all.map_relation_to_array(:api_id)
 
     list_of_streamers.each do |id|
-      titles_url = "https://api.watchmode.com/v1/list-titles/?apiKey=CJ3pKXmnPcgBLUEVstAYuYDvlN4XCY36rfPSEpdU&source_ids=#{id}"
+      titles_url = "https://api.watchmode.com/v1/list-titles/?apiKey=#{ENV.fetch("WATCHMODE_KEY")}&source_ids=#{id}"
 
       raw_response = URI.open(titles_url).read
 
@@ -49,7 +49,7 @@ namespace :api_pull do
       current_page = parsed_titles.fetch("page")
 
       while current_page <= total_pages
-        current_url = "https://api.watchmode.com/v1/list-titles/?apiKey=CJ3pKXmnPcgBLUEVstAYuYDvlN4XCY36rfPSEpdU&source_ids=#{id}&page=#{current_page}"
+        current_url = "https://api.watchmode.com/v1/list-titles/?apiKey=#{ENV.fetch("WATCHMODE_KEY")}&source_ids=#{id}&page=#{current_page}"
 
         response = URI.open(current_url).read
 
